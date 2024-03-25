@@ -1,11 +1,8 @@
 // Import the prompt-sync module
 const prompt = require("prompt-sync")();
 
-// Entries for year of taxation, payment period, basic salary, and benefits
-const yearOfTaxation = prompt("Year of Taxation: ");
-const paymentPeriod = prompt("Payment Period (Month/Year): ");
+// Entry for basic salary
 const basicSalary = parseFloat(prompt("Enter Gross Salary: "));
-const benefits = parseFloat(prompt("Enter Contribution Benefit: "));
 
 // Input for additional benefits and exemptions
 const disabilityExemption = prompt("Do you have a disability exemption certificate? (Yes/No): ");
@@ -28,7 +25,7 @@ if (basicSalary <= 24000) {
 }
 
 // Calculate gross salary
-const grossSalary = basicSalary + benefits;
+const grossSalary = basicSalary;
 
 // Calculate tax amount
 const tax = grossSalary * taxRate;
@@ -77,31 +74,11 @@ if (grossSalary <= 5999) {
 let nssfEmployeeContribution = 0.06 * Math.min(7000, basicSalary);
 let nssfEmployerContribution = 0.06 * Math.min(7000, basicSalary);
 
-// Housing levy deductions (1.5% of gross salary)
-const housingLevy = 0.015 * grossSalary;
-
 // Calculate total deductions
-const totalDeductions = tax + nhifDeductions + nssfEmployeeContribution + housingLevy;
+const totalDeductions = tax + nhifDeductions + nssfEmployeeContribution;
 
 // Calculate net salary after deductions
 let netSalary = grossSalary - totalDeductions;
 
-// Adjusting net salary based on additional benefits and tax exemptions (Values used herein represent standard calculated rates)
-if (disabilityExemption.toLowerCase() === "yes") {
-    netSalary += 5000; // Add 5000 for disability exemption 
-}
-
-if (hasMortgage.toLowerCase() === "yes") {
-    netSalary -= 2000; // Deduct 2000 for mortgage
-}
-
-if (hasLifeInsurance.toLowerCase() === "yes") {
-    netSalary -= 1000; // Deduct 1000 for life insurance
-}
-
-if (hasHomeOwnershipPlan.toLowerCase() === "yes") {
-    netSalary -= 1500; // Deduct 1500 for Home Ownership Savings Plan
-}
-
 // Display net salary
-console.log("Net Salary after deductions and adjustments: " + netSalary);
+console.log("Net Salary after deductions: " + netSalary);
